@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Энигма Сталина</title>
+    <style>
+        /* Подключение твоего шрифта */
+        @font-face {
+            font-family: 'MainFont';
+            src: url('main.otf') format('opentype');
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'MainFont', Arial, sans-serif;
+            color: #000;
+            background-color: #fff;
+            line-height: 1.3;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Шапка с логотипом */
+        header {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        .header-logo {
+            width: 60px;
+            height: auto;
+            margin-right: 15px;
+        }
+
+        .header-title {
+            color: #cc0000;
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        /* Первая секция */
+        .hero-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 40px;
+        }
+
+        .hero-img {
+            flex: 1;
+            max-width: 450px;
+            border-radius: 10px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .hero-text p {
+            font-size: 22px;
+        }
+
+        /* Красные заголовки-разделители */
+        .section-title-red {
+            color: #ff0000;
+            font-size: 48px;
+            text-align: center;
+            margin: 80px 0 50px;
+            font-weight: bold;
+        }
+
+        /* Секция туториала */
+        .tutor-section {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .tutor-img {
+            flex: 1;
+            max-width: 500px;
+            border: 3px solid #ff0000;
+            border-radius: 15px;
+            padding: 5px;
+        }
+
+        .tutor-info {
+            flex: 1;
+        }
+
+        .tutor-info h2 {
+            font-size: 38px;
+            margin-bottom: 20px;
+        }
+
+        .tutor-info span {
+            color: #00b0f0; /* Цвет RadminVPN */
+        }
+
+        .tutor-info p {
+            font-size: 20px;
+            color: #333;
+        }
+
+        /* Секция загрузки */
+        .download-container {
+            text-align: center;
+            padding: 40px 0 100px;
+        }
+
+        .win-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Логотип Windows на CSS/SVG */
+        .win-logo-svg {
+            width: 120px;
+            fill: #00a4ef;
+        }
+
+        .win-label {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .btn-download {
+            display: inline-block;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 15px 80px;
+            font-size: 28px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 12px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255,0,0,0.3);
+        }
+
+        .btn-download:hover {
+            background-color: #cc0000;
+            transform: scale(1.05);
+        }
+
+        /* Адаптивность для мобилок */
+        @media (max-width: 768px) {
+            .hero-section, .tutor-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text h1, .section-title-red {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Шапка -->
+        <header>
+            <img src="enigma.png" alt="Logo" class="header-logo">
+            <div class="header-title">ЭНИГМА СТАЛИНА</div>
+        </header>
+
+        <!-- Блок 1 -->
+        <section class="hero-section">
+            <img src="poboltaem.png" alt="Chat" class="hero-img">
+            <div class="hero-text">
+                <h1>Поболтай вместе с друзьями!</h1>
+                <p>В приложении много приколюх, а также много удобств</p>
+            </div>
+        </section>
+
+        <!-- Блок 2 (Туториал) -->
+        <h2 class="section-title-red">Что нужно что бы пользоваться?</h2>
+        
+        <section class="tutor-section">
+            <img src="tutor.png" alt="Tutorial" class="tutor-img">
+            <div class="tutor-info">
+                <h2>Скачайте <span>RadminVPN</span> с официального сайта</h2>
+                <p>После чего подключитесь к сети друга или создайте свою. Приложени автоматически найдет это приложение и будет через него "общаться"</p>
+            </div>
+        </section>
+
+        <!-- Блок 3 (Скачать) -->
+        <h2 class="section-title-red">Скачать</h2>
+        
+        <div class="download-container">
+            <div class="win-icons">
+                <!-- Векторное лого Windows (всегда четкое) -->
+                <svg class="win-logo-svg" viewBox="0 0 88 88"><path d="M0 12.402l35.687-4.86.016 34.423-35.703.202V12.402zm35.67 43.561l.015 34.427-35.685-4.853V55.733l35.67.23zm4.326-44.536L88 4.225V41.77l-48.004.31V11.427zm48.004 44.308V83.77l-43.678-6.104-.015-30.137 43.693 8.206z""")/>></svg>
+            </div>
+            <div class="win-label">Для Windows 11 и старше</div>
+            <a href="enigmastalina.zip" class="btn-download" download>Скачать</a>
+        </div>
+    </div>
+
+</body>
+</html>
