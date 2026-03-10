@@ -96,7 +96,7 @@
             max-width: 500px;
             border: 3px solid #ff0000;
             border-radius: 15px;
-            padding: 5px;     
+            padding: 5px;
         }
 
         .tutor-info {
@@ -123,17 +123,10 @@
             padding: 40px 0 100px;
         }
 
-        .win-icons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
+        .win-logo-img {
+            width: 150px; /* Размер логотипа Windows */
+            height: auto;
             margin-bottom: 20px;
-        }
-
-        /* Логотип Windows на CSS/SVG */
-        .win-logo-svg {
-            width: 120px;
-            fill: #00a4ef;
         }
 
         .win-label {
@@ -205,10 +198,7 @@
         <h2 class="section-title-red">Скачать</h2>
         
         <div class="download-container">
-            <div class="win-icons">
-                <!-- Векторное лого Windows (всегда четкое) -->
-                <svg class="win-logo-svg" viewBox="0 0 88 88"><path d="M0 12.402l35.687-4.86.016 34.423-35.703.202V12.402zm35.67 43.561l.015 34.427-35.685-4.853V55.733l35.67.23zm4.326-44.536L88 4.225V41.77l-48.004.31V11.427zm48.004 44.308V83.77l-43.678-6.104-.015-30.137 43.693 8.206z""")/>></svg>
-            </div>
+            <img src="winwow.png" alt="Windows Logo" class="win-logo-img">
             <div class="win-label">Для Windows 11 и старше</div>
             <a href="enigmastalina.zip" class="btn-download" download>Скачать</a>
         </div>
