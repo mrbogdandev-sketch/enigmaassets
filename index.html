@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Энигма Сталина</title>
+    <title>Энигма Сталина — адаптивно</title>
     <style>
         /* Подключение твоего шрифта */
         @font-face {
@@ -57,7 +57,8 @@
 
         .hero-img {
             flex: 1;
-            max-width: 450px;
+            max-width: 100%;  /* адаптивность */
+            height: auto;
             border-radius: 10px;
         }
 
@@ -93,7 +94,8 @@
 
         .tutor-img {
             flex: 1;
-            max-width: 500px;
+            max-width: 100%;  /* адаптивность */
+            height: auto;
             border: 3px solid #ff0000;
             border-radius: 15px;
             padding: 5px;
@@ -124,7 +126,8 @@
         }
 
         .win-logo-img {
-            width: 150px; /* Размер логотипа Windows */
+            width: 150px;
+            max-width: 100%;
             height: auto;
             margin-bottom: 20px;
         }
@@ -153,20 +156,119 @@
             transform: scale(1.05);
         }
 
-        /* Адаптивность для мобилок */
+        /* ========== АДАПТИВНОСТЬ ========== */
+
+        /* Планшеты и небольшие ноутбуки */
+        @media (max-width: 992px) {
+            .hero-text h1 {
+                font-size: 36px;
+            }
+            .hero-text p {
+                font-size: 20px;
+            }
+            .tutor-info h2 {
+                font-size: 32px;
+            }
+            .tutor-info p {
+                font-size: 18px;
+            }
+            .section-title-red {
+                font-size: 42px;
+                margin: 60px 0 40px;
+            }
+        }
+
+        /* Мобильные устройства (вертикальная ориентация) */
         @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
             .hero-section, .tutor-section {
                 flex-direction: column;
                 text-align: center;
+                gap: 30px;
             }
-            .hero-text h1, .section-title-red {
+
+            .hero-img, .tutor-img {
+                max-width: 100%;
+                width: 100%;
+            }
+
+            .hero-text h1 {
                 font-size: 32px;
+            }
+            .hero-text p {
+                font-size: 18px;
+            }
+
+            .tutor-info h2 {
+                font-size: 28px;
+            }
+            .tutor-info p {
+                font-size: 17px;
+            }
+
+            .section-title-red {
+                font-size: 36px;
+                margin: 50px 0 30px;
+            }
+
+            .win-label {
+                font-size: 28px;
+            }
+
+            .btn-download {
+                padding: 12px 40px;
+                font-size: 24px;
+            }
+        }
+
+        /* Очень маленькие телефоны (до 480px) */
+        @media (max-width: 480px) {
+            .header-title {
+                font-size: 20px;
+            }
+            .header-logo {
+                width: 45px;
+            }
+
+            .hero-text h1 {
+                font-size: 28px;
+            }
+            .hero-text p {
+                font-size: 16px;
+            }
+
+            .tutor-info h2 {
+                font-size: 24px;
+            }
+            .tutor-info p {
+                font-size: 16px;
+            }
+
+            .section-title-red {
+                font-size: 30px;
+                margin: 40px 0 25px;
+            }
+
+            .win-label {
+                font-size: 24px;
+            }
+
+            .btn-download {
+                padding: 10px 30px;
+                font-size: 22px;
+                width: auto;  /* чтобы кнопка не растягивалась на всю ширину */
+            }
+
+            .win-logo-img {
+                width: 120px;
             }
         }
     </style>
 </head>
 <body>
-
     <div class="container">
         <!-- Шапка -->
         <header>
@@ -190,7 +292,7 @@
             <img src="tutor.png" alt="Tutorial" class="tutor-img">
             <div class="tutor-info">
                 <h2>Скачайте <span>RadminVPN</span> с официального сайта</h2>
-                <p>После чего подключитесь к сети друга или создайте свою. Приложени автоматически найдет это приложение и будет через него "общаться"</p>
+                <p>После чего подключитесь к сети друга или создайте свою. Приложение автоматически найдет это приложение и будет через него "общаться"</p>
             </div>
         </section>
 
@@ -203,6 +305,5 @@
             <a href="enigmastalina.zip" class="btn-download" download>Скачать</a>
         </div>
     </div>
-
 </body>
 </html>
