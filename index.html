@@ -11,55 +11,100 @@
             src: url('main.ttf') format('opentype');
         }
 
-        body {
+        * {
             margin: 0;
             padding: 0;
-            font-family: 'MainFont', Arial, sans-serif;
-            color: #000;
-            background-color: #fff;
-            line-height: 1.3;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'MainFont', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+            color: #1e1e2f;
+            background: linear-gradient(145deg, #f9faff 0%, #f0f3fd 100%);
+            line-height: 1.5;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 30px 24px;
+        }
+
+        /* Анимация появления при скролле */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(25px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Шапка с логотипом */
         header {
             display: flex;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.5);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.7);
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
         }
 
         .header-logo {
             width: 60px;
             height: auto;
-            margin-right: 15px;
+            margin-right: 20px;
+            /* убрана анимация при наведении */
         }
 
         .header-title {
             color: #cc0000;
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 600;
             text-transform: uppercase;
+            letter-spacing: 1.5px;
+            background: linear-gradient(135deg, #cc0000, #ff4d4d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        /* Первая секция */
+        /* Первая секция — карточка со стеклом */
         .hero-section {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-top: 40px;
-            gap: 40px;
+            gap: 50px;
+            margin: 50px 0 70px;
+            padding: 30px;
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 20px 40px -15px rgba(0,20,40,0.2);
+            transition: box-shadow 0.3s ease; /* только тень без движения */
+        }
+        .hero-section:hover {
+            box-shadow: 0 25px 45px -15px rgba(0,20,40,0.25);
         }
 
         .hero-img {
             flex: 1;
-            max-width: 100%;  /* адаптивность */
+            max-width: 100%;
             height: auto;
-            border-radius: 10px;
+            border-radius: 24px;
+            box-shadow: 0 15px 30px -8px rgba(0,0,0,0.15);
+            transition: box-shadow 0.3s ease;
+        }
+        .hero-img:hover {
+            box-shadow: 0 15px 30px -8px rgba(0,0,0,0.2); /* почти без изменений */
         }
 
         .hero-text {
@@ -67,38 +112,65 @@
         }
 
         .hero-text h1 {
-            font-size: 42px;
-            margin-bottom: 15px;
-            font-weight: 800;
+            font-size: 48px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            line-height: 1.2;
+            background: linear-gradient(145deg, #2d2d44, #4a4a6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .hero-text p {
             font-size: 22px;
+            color: #2d2d44;
+            opacity: 0.9;
         }
 
-        /* Красные заголовки-разделители */
+        /* Красные заголовки-разделители — убраны линии */
         .section-title-red {
-            color: #ff0000;
             font-size: 48px;
             text-align: center;
-            margin: 80px 0 50px;
-            font-weight: bold;
+            margin: 100px 0 60px;
+            font-weight: 600;
+            background: linear-gradient(145deg, #d32f2f, #b71c1c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         /* Секция туториала */
         .tutor-section {
             display: flex;
             align-items: center;
-            gap: 50px;
+            gap: 60px;
+            padding: 30px;
+            background: rgba(255,255,255,0.25);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.5);
+            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
+            margin-bottom: 40px;
+            transition: box-shadow 0.3s ease, background 0.3s ease; /* только плавность фона */
+        }
+        .tutor-section:hover {
+            background: rgba(255,255,255,0.3);
+            box-shadow: 0 22px 38px -12px rgba(0,0,0,0.18);
         }
 
         .tutor-img {
             flex: 1;
-            max-width: 100%;  /* адаптивность */
+            max-width: 100%;
             height: auto;
-            border: 3px solid #ff0000;
-            border-radius: 15px;
-            padding: 5px;
+            border: none;
+            border-radius: 28px;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
+            transition: box-shadow 0.3s ease;
+        }
+        .tutor-img:hover {
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
         }
 
         .tutor-info {
@@ -108,21 +180,42 @@
         .tutor-info h2 {
             font-size: 38px;
             margin-bottom: 20px;
+            font-weight: 600;
+            color: #1e1e2f;
         }
 
         .tutor-info span {
-            color: #00b0f0; /* Цвет RadminVPN */
+            color: #00b0f0;
+            background: linear-gradient(145deg, #00b0f0, #0077be);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
         }
 
         .tutor-info p {
             font-size: 20px;
-            color: #333;
+            color: #2d2d44;
+            opacity: 0.9;
+            line-height: 1.5;
         }
 
         /* Секция загрузки */
         .download-container {
             text-align: center;
-            padding: 40px 0 100px;
+            padding: 50px 30px 80px;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 60px;
+            border: 1px solid rgba(255,255,255,0.6);
+            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.2);
+            margin-top: 40px;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+        }
+        .download-container:hover {
+            background: rgba(255,255,255,0.25);
+            box-shadow: 0 32px 52px -20px rgba(0,0,0,0.22);
         }
 
         .win-logo-img {
@@ -130,38 +223,50 @@
             max-width: 100%;
             height: auto;
             margin-bottom: 20px;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
+            transition: filter 0.3s ease;
+        }
+        .win-logo-img:hover {
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); /* без изменений */
         }
 
         .win-label {
             font-size: 32px;
-            font-weight: bold;
+            font-weight: 500;
             margin-bottom: 30px;
+            color: #1e1e2f;
+            background: rgba(255,255,255,0.4);
+            display: inline-block;
+            padding: 0.5rem 2rem;
+            border-radius: 50px;
+            backdrop-filter: blur(4px);
         }
 
         .btn-download {
             display: inline-block;
-            background-color: #ff0000;
+            background: linear-gradient(145deg, #d32f2f, #b71c1c);
             color: #fff;
-            padding: 15px 80px;
+            padding: 16px 80px;
             font-size: 28px;
-            font-weight: bold;
+            font-weight: 600;
             text-decoration: none;
-            border-radius: 12px;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(255,0,0,0.3);
+            border-radius: 60px;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 20px 30px -8px rgba(200, 0, 0, 0.4);
+            border: 1px solid rgba(255,255,255,0.3);
+            letter-spacing: 1px;
         }
 
         .btn-download:hover {
-            background-color: #cc0000;
-            transform: scale(1.05);
+            background: linear-gradient(145deg, #f44336, #d32f2f);
+            box-shadow: 0 22px 32px -8px rgba(200, 0, 0, 0.45);
+            /* убраны translate и scale */
         }
 
-        /* ========== АДАПТИВНОСТЬ ========== */
-
-        /* Планшеты и небольшие ноутбуки */
+        /* Адаптивность */
         @media (max-width: 992px) {
             .hero-text h1 {
-                font-size: 36px;
+                font-size: 38px;
             }
             .hero-text p {
                 font-size: 20px;
@@ -174,20 +279,26 @@
             }
             .section-title-red {
                 font-size: 42px;
-                margin: 60px 0 40px;
             }
         }
 
-        /* Мобильные устройства (вертикальная ориентация) */
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
+                padding: 20px;
+            }
+
+            header {
+                padding: 10px 18px;
+            }
+            .header-title {
+                font-size: 24px;
             }
 
             .hero-section, .tutor-section {
                 flex-direction: column;
                 text-align: center;
                 gap: 30px;
+                padding: 25px;
             }
 
             .hero-img, .tutor-img {
@@ -196,7 +307,7 @@
             }
 
             .hero-text h1 {
-                font-size: 32px;
+                font-size: 34px;
             }
             .hero-text p {
                 font-size: 18px;
@@ -211,7 +322,7 @@
 
             .section-title-red {
                 font-size: 36px;
-                margin: 50px 0 30px;
+                white-space: normal;
             }
 
             .win-label {
@@ -219,12 +330,11 @@
             }
 
             .btn-download {
-                padding: 12px 40px;
+                padding: 14px 50px;
                 font-size: 24px;
             }
         }
 
-        /* Очень маленькие телефоны (до 480px) */
         @media (max-width: 480px) {
             .header-title {
                 font-size: 20px;
@@ -249,7 +359,6 @@
 
             .section-title-red {
                 font-size: 30px;
-                margin: 40px 0 25px;
             }
 
             .win-label {
@@ -257,9 +366,9 @@
             }
 
             .btn-download {
-                padding: 10px 30px;
+                padding: 12px 40px;
                 font-size: 22px;
-                width: auto;  /* чтобы кнопка не растягивалась на всю ширину */
+                width: auto;
             }
 
             .win-logo-img {
@@ -277,7 +386,7 @@
         </header>
 
         <!-- Блок 1 -->
-        <section class="hero-section">
+        <section class="hero-section fade-up">
             <img src="poboltaem.png" alt="Chat" class="hero-img">
             <div class="hero-text">
                 <h1>Поболтай вместе с друзьями!</h1>
@@ -286,9 +395,9 @@
         </section>
 
         <!-- Блок 2 (Туториал) -->
-        <h2 class="section-title-red">Что нужно что бы пользоваться?</h2>
+        <h2 class="section-title-red fade-up">Что нужно что бы пользоваться?</h2>
         
-        <section class="tutor-section">
+        <section class="tutor-section fade-up">
             <img src="tutor.png" alt="Tutorial" class="tutor-img">
             <div class="tutor-info">
                 <h2>Скачайте <span>RadminVPN</span> с официального сайта</h2>
@@ -297,13 +406,35 @@
         </section>
 
         <!-- Блок 3 (Скачать) -->
-        <h2 class="section-title-red">Скачать</h2>
+        <h2 class="section-title-red fade-up">Скачать</h2>
         
-        <div class="download-container">
+        <div class="download-container fade-up">
             <img src="window.png" alt="Windows Logo" class="win-logo-img">
             <div class="win-label">Для Windows 11 и старше</div>
             <a href="enigmastalina.zip" class="btn-download" download>Скачать</a>
         </div>
     </div>
+
+    <!-- Скрипт для анимации при скролле -->
+    <script>
+        (function() {
+            const fadeElements = document.querySelectorAll('.fade-up');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // Можно отключить наблюдение после появления
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.2,
+                rootMargin: '0px 0px -10px 0px'
+            });
+
+            fadeElements.forEach(el => observer.observe(el));
+        })();
+    </script>
 </body>
 </html>
