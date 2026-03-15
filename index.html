@@ -2,15 +2,12 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Энигма Сталина — адаптивно</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Enigma Stalina — P2P общение</title>
+    <!-- Font Awesome (минималистичные иконки) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* Подключение твоего шрифта */
-        @font-face {
-            font-family: 'MainFont';
-            src: url('main.ttf') format('opentype');
-        }
-
+        /* === СБРОС И ПЕРЕМЕННЫЕ === */
         * {
             margin: 0;
             padding: 0;
@@ -18,422 +15,649 @@
         }
 
         body {
-            font-family: 'MainFont', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-            color: #1e1e2f;
-            background: linear-gradient(145deg, #f9faff 0%, #f0f3fd 100%);
+            background-color: #ffffff;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1d1d1f;
             line-height: 1.5;
-            min-height: 100vh;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 30px 24px;
+        :root {
+            --accent: #e11d2f;
+            --accent-light: #fce8e9;
+            --glass: rgba(255, 255, 255, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.8);
+            --shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1);
         }
 
-        /* Анимация появления при скролле */
+        /* === АНИМАЦИИ ПОЯВЛЕНИЯ === */
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(24px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
         .fade-up {
             opacity: 0;
-            transform: translateY(25px);
-            transition: opacity 0.7s ease, transform 0.7s ease;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.3, 1);
         }
-        .fade-up.visible {
+
+        .fade-up.appear {
             opacity: 1;
             transform: translateY(0);
         }
 
-        /* Шапка с логотипом */
+        /* === ШАПКА (СТЕКЛО) === */
         header {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            background: rgba(255,255,255,0.5);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 60px;
-            border: 1px solid rgba(255,255,255,0.7);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.1);
-            margin-bottom: 40px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            background-color: rgba(255, 255, 255, 0.7);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 0.8rem 2rem;
         }
 
-        .header-logo {
-            width: 60px;
-            height: auto;
-            margin-right: 20px;
-            /* убрана анимация при наведении */
-        }
-
-        .header-title {
-            color: #cc0000;
-            font-size: 28px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            background: linear-gradient(135deg, #cc0000, #ff4d4d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Первая секция — карточка со стеклом */
-        .hero-section {
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 50px;
-            margin: 50px 0 70px;
-            padding: 30px;
-            background: rgba(255,255,255,0.3);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.6);
-            box-shadow: 0 20px 40px -15px rgba(0,20,40,0.2);
-            transition: box-shadow 0.3s ease; /* только тень без движения */
-        }
-        .hero-section:hover {
-            box-shadow: 0 25px 45px -15px rgba(0,20,40,0.25);
+            flex-wrap: wrap;
         }
 
-        .hero-img {
-            flex: 1;
-            max-width: 100%;
-            height: auto;
-            border-radius: 24px;
-            box-shadow: 0 15px 30px -8px rgba(0,0,0,0.15);
-            transition: box-shadow 0.3s ease;
-        }
-        .hero-img:hover {
-            box-shadow: 0 15px 30px -8px rgba(0,0,0,0.2); /* почти без изменений */
-        }
-
-        .hero-text {
-            flex: 1;
-        }
-
-        .hero-text h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            line-height: 1.2;
-            background: linear-gradient(145deg, #2d2d44, #4a4a6a);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-text p {
-            font-size: 22px;
-            color: #2d2d44;
-            opacity: 0.9;
-        }
-
-        /* Красные заголовки-разделители — убраны линии */
-        .section-title-red {
-            font-size: 48px;
-            text-align: center;
-            margin: 100px 0 60px;
-            font-weight: 600;
-            background: linear-gradient(145deg, #d32f2f, #b71c1c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        /* Секция туториала */
-        .tutor-section {
+        .logo-app {
             display: flex;
             align-items: center;
-            gap: 60px;
-            padding: 30px;
-            background: rgba(255,255,255,0.25);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 40px;
-            border: 1px solid rgba(255,255,255,0.5);
-            box-shadow: 0 20px 35px -12px rgba(0,0,0,0.15);
-            margin-bottom: 40px;
-            transition: box-shadow 0.3s ease, background 0.3s ease; /* только плавность фона */
-        }
-        .tutor-section:hover {
-            background: rgba(255,255,255,0.3);
-            box-shadow: 0 22px 38px -12px rgba(0,0,0,0.18);
-        }
-
-        .tutor-img {
-            flex: 1;
-            max-width: 100%;
-            height: auto;
-            border: none;
-            border-radius: 28px;
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
-            transition: box-shadow 0.3s ease;
-        }
-        .tutor-img:hover {
-            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.2);
-        }
-
-        .tutor-info {
-            flex: 1;
-        }
-
-        .tutor-info h2 {
-            font-size: 38px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            color: #1e1e2f;
-        }
-
-        .tutor-info span {
-            color: #00b0f0;
-            background: linear-gradient(145deg, #00b0f0, #0077be);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-weight: 600;
-        }
-
-        .tutor-info p {
-            font-size: 20px;
-            color: #2d2d44;
-            opacity: 0.9;
-            line-height: 1.5;
-        }
-
-        /* Секция загрузки */
-        .download-container {
-            text-align: center;
-            padding: 50px 30px 80px;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border-radius: 60px;
-            border: 1px solid rgba(255,255,255,0.6);
-            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.2);
-            margin-top: 40px;
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-        }
-        .download-container:hover {
-            background: rgba(255,255,255,0.25);
-            box-shadow: 0 32px 52px -20px rgba(0,0,0,0.22);
-        }
-
-        .win-logo-img {
-            width: 150px;
-            max-width: 100%;
-            height: auto;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1));
-            transition: filter 0.3s ease;
-        }
-        .win-logo-img:hover {
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.1)); /* без изменений */
-        }
-
-        .win-label {
-            font-size: 32px;
+            gap: 0.5rem;
             font-weight: 500;
-            margin-bottom: 30px;
-            color: #1e1e2f;
-            background: rgba(255,255,255,0.4);
+        }
+
+        .logo-app img {
+            height: 32px;
+            width: auto;
+            transition: transform 0.2s;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            font-size: 1rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #1d1d1f;
+            font-weight: 400;
+            transition: color 0.2s;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 4px;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* === ОБЩИЕ СЕКЦИИ === */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        /* небольшие отступы между секциями регулируются padding, дополнительных margin нет */
+        .section-title {
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            color: #1d1d1f;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-title i {
+            color: var(--accent);
+            font-size: 2rem;
+        }
+
+        /* карточка со стеклом */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            border-radius: 2rem;
+            box-shadow: var(--shadow);
+            padding: 2rem;
+        }
+
+        /* === HERO === */
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 4rem;
+            padding-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-left {
+            flex: 1 1 300px;
+            animation: fadeUp 1s ease-out forwards;
+        }
+
+        .hero-left h1 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-left .highlight {
+            color: var(--accent);
+            position: relative;
             display: inline-block;
-            padding: 0.5rem 2rem;
-            border-radius: 50px;
-            backdrop-filter: blur(4px);
+        }
+
+        .hero-left .highlight::after {
+            content: '';
+            position: absolute;
+            bottom: 6px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background-color: var(--accent-light);
+            border-radius: 4px;
+            z-index: -1;
+        }
+
+        .hero-left p {
+            font-size: 1.2rem;
+            color: #3a3a3c;
+            max-width: 500px;
+            margin-bottom: 2rem;
+        }
+
+        .hero-right {
+            flex: 1 1 300px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-right img {
+            max-width: 280px;
+            width: 100%;
+            filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.1));
+            transition: transform 0.3s;
+        }
+
+        .hero-right img:hover {
+            transform: scale(1.02);
+        }
+
+        /* === КАРУСЕЛЬ (ГОРИЗОНТАЛЬНАЯ) === */
+        .carousel-section {
+            margin-top: 2rem;
+        }
+
+        .carousel-container {
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding: 1rem 0.5rem 2rem 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--accent) #e0e0e0;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .carousel-track::-webkit-scrollbar-thumb {
+            background-color: var(--accent);
+            border-radius: 20px;
+        }
+
+        .carousel-track::-webkit-scrollbar-track {
+            background: #f0f0f0;
+            border-radius: 20px;
+        }
+
+        .carousel-item {
+            flex: 0 0 260px;
+            scroll-snap-align: start;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s, box-shadow 0.3s;
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .carousel-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 25px 40px -14px rgba(0, 0, 0, 0.2);
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+            background: #f2f2f2; /* фон на время загрузки, если картинка ещё не появилась */
+        }
+
+        .carousel-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .carousel-btn {
+            background: white;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+        }
+
+        .carousel-btn:hover {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        /* === ЧАВО === */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+            border-radius: 1.8rem;
+            padding: 2rem 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.03);
+            transition: all 0.2s;
+        }
+
+        .faq-item:hover {
+            border-color: var(--accent-light);
+            box-shadow: 0 20px 30px -10px rgba(225, 29, 47, 0.1);
+        }
+
+        .faq-item h3 {
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .faq-item p {
+            color: #4a4a4c;
+            font-size: 0.95rem;
+        }
+
+        /* === СКАЧАТЬ === */
+        .download-card {
+            text-align: center;
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(20px);
+            border-radius: 3rem;
+            padding: 3rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow);
+        }
+
+        .download-card .status-badge {
+            display: inline-block;
+            background: var(--accent-light);
+            color: var(--accent);
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(225, 29, 47, 0.2);
+        }
+
+        .download-card h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .download-card .dev-note {
+            color: #6e6e73;
+            margin-bottom: 2.5rem;
         }
 
         .btn-download {
-            display: inline-block;
-            background: linear-gradient(145deg, #d32f2f, #b71c1c);
-            color: #fff;
-            padding: 16px 80px;
-            font-size: 28px;
-            font-weight: 600;
-            text-decoration: none;
+            background: var(--accent);
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 1rem 2.8rem;
             border-radius: 60px;
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 20px 30px -8px rgba(200, 0, 0, 0.4);
-            border: 1px solid rgba(255,255,255,0.3);
-            letter-spacing: 1px;
+            cursor: default; /* разработка */
+            opacity: 0.8;
+            box-shadow: 0 10px 20px -5px rgba(225, 29, 47, 0.3);
+            transition: opacity 0.2s, transform 0.1s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .btn-download i {
+            font-size: 1.2rem;
         }
 
         .btn-download:hover {
-            background: linear-gradient(145deg, #f44336, #d32f2f);
-            box-shadow: 0 22px 32px -8px rgba(200, 0, 0, 0.45);
-            /* убраны translate и scale */
+            opacity: 1;
+            transform: scale(1.02);
         }
 
-        /* Адаптивность */
-        @media (max-width: 992px) {
-            .hero-text h1 {
-                font-size: 38px;
-            }
-            .hero-text p {
-                font-size: 20px;
-            }
-            .tutor-info h2 {
-                font-size: 32px;
-            }
-            .tutor-info p {
-                font-size: 18px;
-            }
-            .section-title-red {
-                font-size: 42px;
-            }
+        /* === ФУТЕР === */
+        footer {
+            background-color: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
 
-            header {
-                padding: 10px 18px;
-            }
-            .header-title {
-                font-size: 24px;
-            }
+        .studio-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6e6e73;
+        }
 
-            .hero-section, .tutor-section {
+        .studio-logo img {
+            height: 24px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .studio-logo:hover img {
+            opacity: 1;
+        }
+
+        /* === АДАПТИВНОСТЬ === */
+        @media (max-width: 800px) {
+            .hero {
                 flex-direction: column;
                 text-align: center;
-                gap: 30px;
-                padding: 25px;
+                gap: 2rem;
             }
-
-            .hero-img, .tutor-img {
-                max-width: 100%;
-                width: 100%;
+            .hero-left h1 {
+                font-size: 2.5rem;
             }
-
-            .hero-text h1 {
-                font-size: 34px;
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
             }
-            .hero-text p {
-                font-size: 18px;
+            .nav-links {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+                justify-content: center;
             }
-
-            .tutor-info h2 {
-                font-size: 28px;
+            section {
+                padding: 3rem 1.5rem;
             }
-            .tutor-info p {
-                font-size: 17px;
-            }
-
-            .section-title-red {
-                font-size: 36px;
-                white-space: normal;
-            }
-
-            .win-label {
-                font-size: 28px;
-            }
-
-            .btn-download {
-                padding: 14px 50px;
-                font-size: 24px;
+            .section-title {
+                font-size: 2rem;
             }
         }
 
         @media (max-width: 480px) {
-            .header-title {
-                font-size: 20px;
+            .carousel-item {
+                flex-basis: 200px;
             }
-            .header-logo {
-                width: 45px;
+            .carousel-item img {
+                height: 140px;
             }
-
-            .hero-text h1 {
-                font-size: 28px;
+            .hero-left h1 {
+                font-size: 2rem;
             }
-            .hero-text p {
-                font-size: 16px;
-            }
-
-            .tutor-info h2 {
-                font-size: 24px;
-            }
-            .tutor-info p {
-                font-size: 16px;
-            }
-
-            .section-title-red {
-                font-size: 30px;
-            }
-
-            .win-label {
-                font-size: 24px;
-            }
-
             .btn-download {
-                padding: 12px 40px;
-                font-size: 22px;
-                width: auto;
+                padding: 0.8rem 2rem;
+                font-size: 1rem;
             }
+        }
 
-            .win-logo-img {
-                width: 120px;
-            }
+        /* вспомогательные акценты */
+        .accent-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 4px;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Шапка -->
-        <header>
-            <img src="enigma.png" alt="Logo" class="header-logo">
-            <div class="header-title">ЭНИГМА СТАЛИНА</div>
-        </header>
-
-        <!-- Блок 1 -->
-        <section class="hero-section fade-up">
-            <img src="poboltaem.png" alt="Chat" class="hero-img">
-            <div class="hero-text">
-                <h1>Поболтай вместе с друзьями!</h1>
-                <p>В приложении много приколюх, а также много удобств</p>
+    <header>
+        <div class="nav-container">
+            <div class="logo-app">
+                <!-- Используем ТОЛЬКО предоставленный logo.svg (никаких замен) -->
+                <img src="logo.svg" alt="Enigma Stalina">
+                <span>Enigma Stalina</span>
             </div>
-        </section>
-
-        <!-- Блок 2 (Туториал) -->
-        <h2 class="section-title-red fade-up">Что нужно что бы пользоваться?</h2>
-        
-        <section class="tutor-section fade-up">
-            <img src="tutor.png" alt="Tutorial" class="tutor-img">
-            <div class="tutor-info">
-                <h2>Скачайте <span>RadminVPN</span> с официального сайта</h2>
-                <p>После чего подключитесь к сети друга или создайте свою. Приложение автоматически найдет это приложение и будет через него "общаться"</p>
-            </div>
-        </section>
-
-        <!-- Блок 3 (Скачать) -->
-        <h2 class="section-title-red fade-up">Скачать</h2>
-        
-        <div class="download-container fade-up">
-            <img src="window.png" alt="Windows Logo" class="win-logo-img">
-            <div class="win-label">Для Windows 11 и старше</div>
-            <a href="enigmastalina.zip" class="btn-download" download>Скачать</a>
+            <nav class="nav-links">
+                <a href="#about">О приложении</a>
+                <a href="#faq">ЧАВО</a>
+                <a href="#download">Скачать</a>
+            </nav>
         </div>
-    </div>
+    </header>
 
-    <!-- Скрипт для анимации при скролле -->
+    <main>
+        <!-- Hero (короткое представление) -->
+        <section style="padding-bottom: 2rem;">
+            <div class="hero">
+                <div class="hero-left">
+                    <h1>Общайтесь <span class="highlight">P2P</span><br>без компромиссов</h1>
+                    <p>Enigma Stalina — простое и прямое общение между ПК. Никаких серверов, только приватность и скорость.</p>
+                    <div style="display: flex; gap: 1rem; align-items: center;">
+                        <span style="background: var(--accent-light); padding: 0.4rem 1rem; border-radius: 40px; color: var(--accent);">в разработке</span>
+                        <span><i class="fas fa-circle" style="color: var(--accent); font-size: 0.4rem;"></i> студия бэгэбэн</span>
+                    </div>
+                </div>
+                <div class="hero-right">
+                    <!-- Логотип приложения (крупно) -->
+                    <img src="logo.svg" alt="Enigma Stalina big">
+                </div>
+            </div>
+        </section>
+
+        <!-- О приложении + карусель -->
+        <section id="about">
+            <div class="section-title fade-up">
+                <i class="fas fa-cube"></i> О приложении
+            </div>
+            <div class="glass-card fade-up">
+                <p style="font-size: 1.2rem; max-width: 800px; margin-bottom: 2rem;">P2P-мессенджер для ПК, созданный студией бэгэбэн. Минимум интерфейса — максимум свободы. Вот как это выглядит:</p>
+            </div>
+
+            <!-- карусель с картинками howto1.png – howto5.png -->
+            <div class="carousel-section fade-up">
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- Только указанные файлы (никаких подмен) -->
+                        <div class="carousel-item"><img src="howto1.png" alt="howto 1"></div>
+                        <div class="carousel-item"><img src="howto2.png" alt="howto 2"></div>
+                        <div class="carousel-item"><img src="howto3.png" alt="howto 3"></div>
+                        <div class="carousel-item"><img src="howto4.png" alt="howto 4"></div>
+                        <div class="carousel-item"><img src="howto5.png" alt="howto 5"></div>
+                    </div>
+                </div>
+                <div class="carousel-controls">
+                    <button class="carousel-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+                    <button class="carousel-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+                <p style="text-align: center; margin-top: 1rem; color: #6e6e73; font-size: 0.9rem;">* листайте — интерфейс в процессе</p>
+            </div>
+        </section>
+
+        <!-- ЧАВО -->
+        <section id="faq">
+            <div class="section-title fade-up">
+                <i class="fas fa-comment-dots"></i> ЧАВО
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item fade-up">
+                    <h3><i class="fas fa-question-circle"></i> Когда выйдет?</h3>
+                    <p>Приложение в активной разработке. Следите за обновлениями.</p>
+                </div>
+                <div class="faq-item fade-up">
+                    <h3><i class="fas fa-question-circle"></i> Платформа?</h3>
+                    <p>Первая версия только для ПК (Windows, Linux, macOS). P2P на основе libp2p.</p>
+                </div>
+                <div class="faq-item fade-up">
+                    <h3><i class="fas fa-question-circle"></i> Будет ли мобильная?</h3>
+                    <p>Пока в планах только десктоп, но не исключаем.</p>
+                </div>
+                <div class="faq-item fade-up">
+                    <h3><i class="fas fa-question-circle"></i> Почему «Enigma Stalina»?</h3>
+                    <p>Сталин — символ стойкости. Enigma — загадка. Наше приложение сочетает простоту и защищённость.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Скачать -->
+        <section id="download">
+            <div class="section-title fade-up">
+                <i class="fas fa-download"></i> Скачать
+            </div>
+            <div class="download-card fade-up">
+                <span class="status-badge"><i class="fas fa-code"></i> pre-alpha / разработка</span>
+                <h2>Enigma Stalina</h2>
+                <p class="dev-note">Приложение находится в стадии активной разработки. Скоро появится первая сборка.</p>
+                <button class="btn-download" disabled style="cursor: not-allowed; opacity: 0.6;">
+                    <i class="fas fa-hourglass-half"></i> Скоро
+                </button>
+                <p style="margin-top: 1.8rem; font-size: 0.85rem; color: #8e8e93;">
+                    <i class="far fa-envelope"></i> Подпишитесь на новости студии бэгэбэн
+                </p>
+                <!-- Логотип студии (только файл logobegeben.svg) -->
+                <div class="studio-logo" style="justify-content: center; margin-top: 1rem;">
+                    <img src="logobegeben.svg" alt="студия бэгэбэн">
+                    <span>бэгэбэн</span>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="studio-logo">
+                <img src="logobegeben.svg" alt="студия бэгэбэн">
+                <span>© 2025 студия бэгэбэн</span>
+            </div>
+            <div style="display: flex; gap: 2rem; color: #8e8e93; font-size: 0.9rem;">
+                <span>Enigma Stalina</span>
+                <span class="accent-dot"></span>
+                <span>P2P общение</span>
+                <span class="accent-dot"></span>
+                <span>в разработке</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Небольшой JS для карусели и анимаций появления -->
     <script>
         (function() {
+            // карусель
+            const track = document.getElementById('carouselTrack');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            if (track && prevBtn && nextBtn) {
+                const scrollAmount = 280; // примерная ширина элемента + gap
+                prevBtn.addEventListener('click', () => {
+                    track.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+                });
+                nextBtn.addEventListener('click', () => {
+                    track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+                });
+            }
+
+            // анимации при скролле (Intersection Observer)
             const fadeElements = document.querySelectorAll('.fade-up');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        // Можно отключить наблюдение после появления
-                        observer.unobserve(entry.target);
+            if (fadeElements.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('appear');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' });
+
+                fadeElements.forEach(el => observer.observe(el));
+            }
+
+            // плавный скролл к якорям
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = href.substring(1);
+                        const target = document.getElementById(targetId);
+                        if (target) {
+                            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
                     }
                 });
-            }, {
-                threshold: 0.2,
-                rootMargin: '0px 0px -10px 0px'
             });
-
-            fadeElements.forEach(el => observer.observe(el));
         })();
     </script>
 </body>
