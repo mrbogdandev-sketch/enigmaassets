@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Оцените звук</title>
+    <!-- Font Awesome (только для звезд) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* === СБРОС === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1d1d1f;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        :root {
+            --accent: #e11d2f;        /* красный для выбранных звезд */
+            --star-hover: #ffcc00;     /* желтый для наведения */
+            --star-inactive: #d4d4d4;  /* серый для неактивных */
+        }
+
+        /* === КОНТЕЙНЕР === */
+        .survey-container {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        /* === ЗАГОЛОВОК (без иконок) === */
+        h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 2rem;
+            color: #1d1d1f;
+        }
+
+        /* === ЗВЕЗДЫ === */
+        .rating-stars {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin: 2rem 0 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .star {
+            font-size: 3rem;
+            color: var(--star-inactive);
+            cursor: pointer;
+            transition: color 0.1s;
+        }
+
+        .star.active {
+            color: var(--accent); /* красный для активных (выбранных) */
+        }
+
+        .star:hover {
+            color: var(--star-hover) !important; /* желтый при наведении (перебивает active) */
+        }
+
+        /* === КНОПКА (без иконки) === */
+        .btn-submit {
+            background: var(--accent);
+            border: none;
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 500;
+            padding: 1rem 3rem;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 10px 20px -5px rgba(225, 29, 47, 0.3);
+            transition: opacity 0.2s;
+            border: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 3rem;
+        }
+
+        .btn-submit:hover {
+            opacity: 0.9;
+        }
+
+        /* === ЛОГО СТУДИИ (без прямоугольника) === */
+        .studio-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #6e6e73;
+            text-decoration: none;
+        }
+
+        .studio-logo img {
+            height: 24px;
+            width: auto;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .studio-logo:hover img {
+            opacity: 1;
+        }
+
+        /* === СООБЩЕНИЕ (необязательно, но оставим) === */
+        .toast-message {
+            margin-top: 1rem;
+            font-size: 1rem;
+            color: var(--accent);
+            min-height: 2rem;
+        }
+
+        /* === АДАПТАЦИЯ === */
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            .star {
+                font-size: 2.5rem;
+            }
+            .btn-submit {
+                font-size: 1.1rem;
+                padding: 0.8rem 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="survey-container">
+        <!-- Заголовок вопроса (без иконок) -->
+        <h1>Как вы можете оценить звук?</h1>
+
+        <!-- Звезды рейтинга -->
+        <div class="rating-stars" id="ratingStars">
+            <i class="star far fa-star" data-value="1"></i>
+            <i class="star far fa-star" data-value="2"></i>
+            <i class="star far fa-star" data-value="3"></i>
+            <i class="star far fa-star" data-value="4"></i>
+            <i class="star far fa-star" data-value="5"></i>
+        </div>
+
+        <!-- Кнопка отправки (без иконки) -->
+        <button class="btn-submit" id="submitBtn">Отправить</button>
+
+        <!-- Небольшое уведомление (появится при отправке) -->
+        <div class="toast-message" id="toast"></div>
+
+        <!-- Лого студии внизу (без прямоугольника) -->
+        <div class="studio-logo">
+            <img src="logobegeven.svg" alt="студия бэгэбэн">
+            <span>бэгэбэн</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const stars = document.querySelectorAll('.star');
+            const submitBtn = document.getElementById('submitBtn');
+            const toast = document.getElementById('toast');
+            let currentRating = 0; // 0 - ничего не выбрано
+
+            // Функция обновления звезд (активные)
+            function setRating(rating) {
+                stars.forEach((star, index) => {
+                    const value = parseInt(star.dataset.value, 10);
+                    if (value <= rating) {
+                        star.classList.remove('far');
+                        star.classList.add('fas', 'active');
+                    } else {
+                        star.classList.remove('fas', 'active');
+                        star.classList.add('far');
+                    }
+                });
+                currentRating = rating;
+            }
+
+            // Клик на звезду
+            stars.forEach(star => {
+                star.addEventListener('click', (e) => {
+                    const value = parseInt(star.dataset.value, 10);
+                    setRating(value);
+                });
+            });
+
+            // Отправка оценки
+            submitBtn.addEventListener('click', () => {
+                if (currentRating === 0) {
+                    toast.textContent = 'Пожалуйста, оцените звук.';
+                } else {
+                    toast.textContent = 'Спасибо! Мы учтем вашу оценку';
+                    setTimeout(() => {
+                        toast.textContent = 'Страницу можно закрыть вручную.';
+                    }, 2000);
+                }
+            });
+
+            // Убираем стандартный hover, он уже задан в CSS (желтый цвет)
+            // При необходимости можно добавить сброс активных при наведении, но это не обязательно
+        })();
+    </script>
+</body>
+</html>
