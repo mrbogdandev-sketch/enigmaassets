@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Что делать если оскорбляют? — Enigma Stalina</title>
+    <style>
+        /* === СБРОС И ПЕРЕМЕННЫЕ === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #ffffff;
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: #1d1d1f;
+            line-height: 1.5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        :root {
+            --accent: #e11d2f;
+            --accent-light: #fce8e9;
+            --text-secondary: #3a3a3c;
+            --gray-light: #f5f5f7;
+        }
+
+        /* === АНИМАЦИЯ ПОЯВЛЕНИЯ === */
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(24px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
+        }
+
+        /* === КОНТЕЙНЕР === */
+        .content {
+            max-width: 720px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* === ЗАГОЛОВОК === */
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 600;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+            line-height: 1.2;
+        }
+
+        /* === ТЕКСТ === */
+        p, .instruction-text {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.2rem;
+        }
+
+        .instruction-list {
+            list-style: none;
+            margin: 1.5rem 0 2rem 0;
+        }
+
+        .instruction-list li {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            padding-left: 1.8rem;
+            position: relative;
+        }
+
+        .instruction-list li::before {
+            content: "•";
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -0.2rem;
+        }
+
+        .instruction-list li strong {
+            color: #1d1d1f;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .command {
+            background-color: var(--gray-light);
+            padding: 0.2rem 0.6rem;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 1rem;
+            color: #1d1d1f;
+            display: inline-block;
+            margin-top: 0.5rem;
+        }
+
+        /* === ОПРОС === */
+        .poll-section {
+            margin: 3rem 0 2rem 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            text-align: center;
+            transition: opacity 0.3s;
+        }
+
+        .poll-question {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #1d1d1f;
+            margin-bottom: 1.5rem;
+        }
+
+        .poll-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .poll-btn {
+            background: white;
+            border: 1px solid rgba(0,0,0,0.08);
+            color: #1d1d1f;
+            font-size: 1.2rem;
+            font-weight: 500;
+            padding: 0.8rem 2.5rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            min-width: 120px;
+        }
+
+        .poll-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .poll-btn:active {
+            transform: scale(0.98);
+        }
+
+        .poll-feedback {
+            margin-top: 1.2rem;
+            font-size: 1.2rem;
+            color: var(--accent);
+            min-height: 2rem;
+            font-weight: 500;
+        }
+
+        /* === ЛОГО СТУДИИ === */
+        .studio-logo {
+            margin-top: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: #6e6e73;
+            text-decoration: none;
+        }
+
+        .studio-logo img {
+            height: 24px;
+            width: auto;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .studio-logo:hover img {
+            opacity: 1;
+        }
+
+        /* === АДАПТАЦИЯ === */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            p, .instruction-list li {
+                font-size: 1rem;
+            }
+            .poll-btn {
+                font-size: 1rem;
+                padding: 0.7rem 1.8rem;
+                min-width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content fade-up">
+        <h1>Что делать если оскорбляют?</h1>
+        
+        <p>Если вас оскорбляют в голосовой комнате и вас это задевает — есть несколько способов как заблокировать пользователя в голосовом чате.</p>
+
+        <ol class="instruction-list">
+            <li>
+                <strong>Заблокировать в RadminVPN</strong>
+                <span>Т.к. приложение не хранит данные о пользователе, мы не можем наказать его за неподобающее поведение. Если вы создатель сервера в RadminVPN: просто заблокируйте пользователя:</span>
+                <div>
+                    <span class="command">Правый клик по пользователю → Remove (Удалить) → Yes (Да)</span>
+                </div>
+            </li>
+            <li>
+                <strong>Если вы не создатель сервера:</strong>
+                <span>Попросите создателя заблокировать пользователя. Если же он отказывается — выйдите из сервера. Такое комьюнити вам точно не нужно.</span>
+            </li>
+        </ol>
+
+        <!-- Мини-опрос "Помогла ли вам эта страница?" -->
+        <div class="poll-section" id="pollSection">
+            <div class="poll-question" id="pollQuestion">Помогла ли вам эта страница?</div>
+            <div class="poll-buttons" id="pollButtons">
+                <button class="poll-btn" id="pollYes">Да</button>
+                <button class="poll-btn" id="pollNo">Нет</button>
+            </div>
+            <div class="poll-feedback" id="pollFeedback"></div>
+        </div>
+
+        <!-- Лого студии -->
+        <div class="studio-logo">
+            <img src="logobegeven.svg" alt="студия бэгэбэн">
+            <span>бэгэбэн</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const pollSection = document.getElementById('pollSection');
+            const pollQuestion = document.getElementById('pollQuestion');
+            const pollButtons = document.getElementById('pollButtons');
+            const pollFeedback = document.getElementById('pollFeedback');
+            const yesBtn = document.getElementById('pollYes');
+            const noBtn = document.getElementById('pollNo');
+
+            function handleVote(answer) {
+                // Скрываем вопрос и кнопки
+                pollQuestion.style.display = 'none';
+                pollButtons.style.display = 'none';
+                
+                // Показываем сообщение в зависимости от ответа
+                if (answer === 'yes') {
+                    pollFeedback.textContent = 'Спасибо, рады что помогли!';
+                } else {
+                    pollFeedback.textContent = 'Жаль, что не помогли. Мы работаем над улучшением!';
+                }
+                // Оставляем feedback видимым, он уже есть в DOM
+            }
+
+            yesBtn.addEventListener('click', () => handleVote('yes'));
+            noBtn.addEventListener('click', () => handleVote('no'));
+        })();
+    </script>
+</body>
+</html>
