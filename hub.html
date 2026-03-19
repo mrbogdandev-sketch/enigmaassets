@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Хаб</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Шапка */
+        .header {
+            padding: 30px 60px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar-box {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .avatar-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .greeting {
+            font-size: 22px;
+            font-weight: 800;
+            color: #000;
+        }
+
+        /* Каретка (курсор) */
+        #name-target {
+            border-right: 2px solid #000;
+            padding-right: 2px;
+            animation: blink 0.7s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: black }
+        }
+
+        /* Центр */
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-bottom: 50px;
+        }
+
+        .warning-img {
+            width: 90px;
+            margin-bottom: 25px;
+            opacity: 0.25;
+        }
+
+        .text-block {
+            color: #acacac;
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.4;
+        }
+
+        .link {
+            color: #5856d6;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <div class="avatar-box">
+            <img src="" id="avatar" alt="">
+        </div>
+        <div class="greeting">Здравствуйте, <span id="name-target"></span>!</div>
+    </div>
+
+    <div class="content">
+        <img src="warning.png" class="warning-img">
+        <div class="text-block">
+            В данный момент “Хаб” -<br>
+            экспериментальная функция.<br>
+            Поэтому она сейчас недоступна.<br>
+            Следите за <a href="#" class="link">новостями</a>!
+        </div>
+    </div>
+
+    <script>
+        const BASE_1 = ["Большой", "Глупый", "Огромный", "Жирный", "Смешной", "Свиной", "Мясистый", "Тупой", "Крутой"];
+        const BASE_2 = ["Билли", "Джонни", "Гэрри", "Черт", "Ежик", "Баран", "Олень", "Воробушек", "Денис", "Петя"];
+        const AVATARS = ["voin.png", "stalin.png", "officer.png", "banyka.png"];
+
+        const nameLabel = document.getElementById('name-target');
+        const imgLabel = document.getElementById('avatar');
+
+        function getRandom(arr) {
+            return arr[Math.floor(Math.random() * arr.length)];
+        }
+
+        async function startCycle() {
+            while (true) {
+                // 1. Устанавливаем рандомную аватарку
+                imgLabel.src = getRandom(AVATARS);
+
+                // 2. Генерируем имя с пробелом перед числом
+                const num = Math.floor(Math.random() * 201) + 100;
+                const fullName = `${getRandom(BASE_1)} ${getRandom(BASE_2)} ${num}`;
+
+                // 3. Печатаем
+                for (let i = 0; i <= fullName.length; i++) {
+                    nameLabel.textContent = fullName.substring(0, i);
+                    await new Promise(r => setTimeout(r, 70));
+                }
+
+                // Ждем 3 секунды
+                await new Promise(r => setTimeout(r, 3000));
+
+                // 4. Стираем
+                for (let i = fullName.length; i >= 0; i--) {
+                    nameLabel.textContent = fullName.substring(0, i);
+                    await new Promise(r => setTimeout(r, 40));
+                }
+
+                // Пауза перед новой итерацией (и новой аватаркой)
+                await new Promise(r => setTimeout(r, 500));
+            }
+        }
+
+        // Запуск при загрузке
+        startCycle();
+    </script>
+</body>
+</html>
