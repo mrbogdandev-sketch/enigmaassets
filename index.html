@@ -496,7 +496,7 @@
             </div>
         </section>
 
-        <!-- Скачать (активная кнопка) -->
+        <!-- Скачать (активная кнопка ведёт на Google Drive) -->
         <section id="download">
             <div class="section-title fade-up">
                 <i class="fas fa-download"></i> Скачать
@@ -505,7 +505,7 @@
                 <h2>Windows. Версия 1.0</h2>
                 <p class="dev-note">Приложение находится в стадии активной разработки. Первая сборка уже доступна.</p>
                 <button class="btn-download" id="downloadBtn">
-                    <i class="fas fa-download"></i> Скачать ES Beta.zip
+                    <i class="fab fa-google-drive"></i> Скачать с Google Drive
                 </button>
             </div>
         </section>
@@ -555,17 +555,11 @@
                 });
             });
 
-            // Активация скачивания
+            // Кнопка ведёт на Google Drive (открывается в новой вкладке)
             const downloadBtn = document.getElementById('downloadBtn');
             if (downloadBtn) {
                 downloadBtn.addEventListener('click', () => {
-                    // Создаём временную ссылку на файл ES Beta.zip
-                    const link = document.createElement('a');
-                    link.href = 'ES Beta.zip';
-                    link.download = 'ES Beta.zip'; // атрибут download для принудительного скачивания
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
+                    window.open('https://drive.google.com/file/d/10YiEEq6f3FdAL4EyhlTyObQp2DJ-8qNO/view?usp=sharing', '_blank');
                 });
             }
         })();
