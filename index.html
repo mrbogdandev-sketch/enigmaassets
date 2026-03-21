@@ -138,7 +138,7 @@
         .hero {
             display: flex;
             align-items: center;
-            justify-content: flex-start; /* прижимаем влево */
+            justify-content: flex-start;
             padding-top: 2rem;
         }
 
@@ -178,7 +178,7 @@
             font-size: 1.2rem;
             color: #3a3a3c;
             max-width: 500px;
-            margin-bottom: 0; /* убрали отступ, так как нет дополнительных элементов */
+            margin-bottom: 0;
         }
 
         /* === КАРУСЕЛЬ === */
@@ -353,8 +353,7 @@
             font-weight: 500;
             padding: 1rem 2.8rem;
             border-radius: 60px;
-            cursor: default;
-            opacity: 0.8;
+            cursor: pointer;
             box-shadow: 0 10px 20px -5px rgba(225, 29, 47, 0.3);
             transition: opacity 0.2s, transform 0.1s;
             display: inline-flex;
@@ -367,7 +366,7 @@
         }
 
         .btn-download:hover {
-            opacity: 1;
+            opacity: 0.9;
             transform: scale(1.02);
         }
 
@@ -441,7 +440,6 @@
                 <div class="hero-left">
                     <h1>Общайтесь <span class="highlight">P2P</span><br>без компромиссов</h1>
                     <p>Enigma Stalina — простое и прямое общение между ПК. Никаких серверов, только приватность и скорость.</p>
-                    <!-- надпись "в разработке / студия бэгэбэн" полностью удалена -->
                 </div>
             </div>
         </section>
@@ -498,22 +496,20 @@
             </div>
         </section>
 
-        <!-- Скачать (без подписки на новости) -->
+        <!-- Скачать (активная кнопка) -->
         <section id="download">
             <div class="section-title fade-up">
                 <i class="fas fa-download"></i> Скачать
             </div>
             <div class="download-card fade-up">
                 <h2>Windows. Версия 1.0</h2>
-                <p class="dev-note">Приложение находится в стадии активной разработки. Скоро появится первая сборка.</p>
-                <button class="btn-download" disabled style="cursor: not-allowed; opacity: 0.6;">
-                    <i class="fas fa-hourglass-half"></i> Скоро
+                <p class="dev-note">Приложение находится в стадии активной разработки. Первая сборка уже доступна.</p>
+                <button class="btn-download" id="downloadBtn">
+                    <i class="fas fa-download"></i> Скачать ES Beta.zip
                 </button>
-                </div>
+            </div>
         </section>
     </main>
-
-    <!-- Футер полностью удалён -->
 
     <script>
         (function() {
@@ -558,6 +554,20 @@
                     }
                 });
             });
+
+            // Активация скачивания
+            const downloadBtn = document.getElementById('downloadBtn');
+            if (downloadBtn) {
+                downloadBtn.addEventListener('click', () => {
+                    // Создаём временную ссылку на файл ES Beta.zip
+                    const link = document.createElement('a');
+                    link.href = 'ES Beta.zip';
+                    link.download = 'ES Beta.zip'; // атрибут download для принудительного скачивания
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+            }
         })();
     </script>
 </body>
